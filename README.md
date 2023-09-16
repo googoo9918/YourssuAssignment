@@ -28,4 +28,6 @@
     - ![image](https://github.com/googoo9918/YourssuAssignment/assets/102513932/362c3f55-b311-4f2d-aefb-e02857a931a4)
   - Comment
     - ![image](https://github.com/googoo9918/YourssuAssignment/assets/102513932/ba87190f-001e-4243-b607-2632320e4455)
+- Test
+  - 게시글 생성, 수정, 삭제에 대한 테스트 코드를 구현하였습니다
 
