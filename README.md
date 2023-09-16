@@ -21,3 +21,11 @@
     - 비즈니스 예외 처리 정보를 담은 ErrorCode
     - 예외 처리 형식을 위한 ErrorResponse가 있습니다
     - GlobalExceptionHandler는 전역 에러 처리를 위한 클래스입니다
+- DataBase는 MySQL을 사용했습니다
+  - User
+    - ![image](https://github.com/googoo9918/YourssuAssignment/assets/102513932/f42293bd-09c9-407f-a75d-e3596a446ed8)
+  - Article
+    - ![image](https://github.com/googoo9918/YourssuAssignment/assets/102513932/362c3f55-b311-4f2d-aefb-e02857a931a4)
+  - Comment
+    - ![image](https://github.com/googoo9918/YourssuAssignment/assets/102513932/ba87190f-001e-4243-b607-2632320e4455)
+
