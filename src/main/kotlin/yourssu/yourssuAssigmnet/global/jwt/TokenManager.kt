@@ -1,11 +1,16 @@
 package yourssu.yourssuAssigmnet.global.jwt
 
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
 import yourssu.yourssuAssigmnet.domain.user.constant.Role
 import yourssu.yourssuAssigmnet.global.jwt.dto.JwtTokenDto
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import yourssu.yourssuAssigmnet.global.error.ErrorCode
+import yourssu.yourssuAssigmnet.global.error.exception.AuthenticationException
 import yourssu.yourssuAssigmnet.global.jwt.constant.GrantType
 import yourssu.yourssuAssigmnet.global.jwt.constant.TokenType
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class TokenManager(
@@ -59,4 +64,29 @@ class TokenManager(
             .setHeaderParam("typ", "JWT")
             .compact()
     }
+
+    fun validateToken(token: String) {
+        // 토큰 유효성 확인 메서드
+        try {
+            Jwts.parser().setSigningKey(tokenSecret.toByteArray(StandardCharsets.UTF_8))
+                .parseClaimsJws(token)
+        } catch (e: ExpiredJwtException) {
+            throw AuthenticationException(ErrorCode.TOKEN_EXPIRED)
+        } catch (e: Exception) {
+            throw AuthenticationException(ErrorCode.NOT_VALID_TOKEN)
+        }
+    }
+
+    fun getTokenClaims(token: String): Claims {
+        // 토큰 정보를 서버에서 사용할 때, payload에 있는 claim 정보들을 가져오는 메서드
+        val claims: Claims
+        try {
+            claims = Jwts.parser().setSigningKey(tokenSecret.toByteArray(StandardCharsets.UTF_8))
+                .parseClaimsJws(token).body
+        } catch (e: Exception) {
+            throw AuthenticationException(ErrorCode.NOT_VALID_TOKEN)
+        }
+        return claims
+    }
+
 }
