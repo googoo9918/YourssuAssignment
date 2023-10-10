@@ -22,7 +22,7 @@ data class User(
     var username: String,
 
     @Column(length = 250)
-    var refreshToken: String,
+    var refreshToken: String? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
