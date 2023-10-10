@@ -2,6 +2,7 @@ package yourssu.yourssuAssigmnet.domain.user.entity
 
 import yourssu.yourssuAssigmnet.domain.common.BaseTimeEntity
 import yourssu.yourssuAssigmnet.domain.user.constant.Role
+import yourssu.yourssuAssigmnet.global.jwt.dto.JwtTokenDto
 import javax.persistence.*
 
 @Entity
@@ -37,6 +38,12 @@ data class User(
     fun updateRole(role: Role?) {
         role?.let {
             this.role = it
+        }
+    }
+
+    fun updateRefreshToken(jwtTokenDto: JwtTokenDto?){
+        jwtTokenDto?.let{
+            this.refreshToken = it.refreshToken
         }
     }
 }
