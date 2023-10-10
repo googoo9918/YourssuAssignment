@@ -1,6 +1,7 @@
 package yourssu.yourssuAssigmnet.domain.user.entity
 
 import yourssu.yourssuAssigmnet.domain.common.BaseTimeEntity
+import yourssu.yourssuAssigmnet.domain.user.constant.Role
 import javax.persistence.*
 
 @Entity
@@ -17,12 +18,25 @@ data class User(
     var password: String,
 
     @Column(nullable = false)
-    var username: String
+    var username: String,
+
+    @Column(length = 250)
+    var refreshToken: String,
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    var role: Role
 ) : BaseTimeEntity() {
 
-    fun encoderPassword(password: String?) {
+    fun encodePassword(password: String?) {
         password?.let {
             this.password = it
+        }
+    }
+
+    fun updateRole(role: Role?) {
+        role?.let {
+            this.role = it
         }
     }
 }
