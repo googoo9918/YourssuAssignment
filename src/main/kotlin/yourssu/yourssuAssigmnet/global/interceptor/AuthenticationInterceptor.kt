@@ -1,4 +1,4 @@
-package yourssu.yourssuAssigmnet.global.jwt.interceptor
+package yourssu.yourssuAssigmnet.global.interceptor
 
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
