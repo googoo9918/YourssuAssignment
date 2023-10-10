@@ -8,17 +8,20 @@ import yourssu.yourssuAssigmnet.global.error.exception.EntityNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
+import yourssu.yourssuAssigmnet.global.jwt.TokenManager
 
 @Service
 @Transactional
 class UserService(
     private val userRepository: UserRepository,
+    private val tokenManager: TokenManager,
     private val passwordEncoder: BCryptPasswordEncoder
 ) {
 
     fun createUser(user: User): User {
         validateDuplicateUser(user)
-        user.encoderPassword(passwordEncoder.encode(user.password))
+        user.encodePassword(passwordEncoder.encode(user.password))
         return userRepository.save(user)
     }
 
@@ -56,5 +59,15 @@ class UserService(
     fun deleteUser(email: String, password: String) {
         val user = validateRegisterUser(email, password)
         userRepository.deleteById(user.userId!!)
+    }
+
+    fun login(user: User): UserDto.LoginResponse {
+        val validateUser = validateRegisterUser(user.email, user.password)
+        val jwtTokenDto = tokenManager.createJwtTokenDto(validateUser.userId!!, validateUser.role)
+
+        validateUser.updateRefreshToken(jwtTokenDto)
+        userRepository.save(validateUser)
+
+        return UserDto.LoginResponse.of(jwtTokenDto, validateUser)
     }
 }
