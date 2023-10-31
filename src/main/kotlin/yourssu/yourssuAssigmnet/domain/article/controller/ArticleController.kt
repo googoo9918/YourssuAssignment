@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import yourssu.yourssuAssigmnet.domain.article.mapper.ArticleMapper
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.Auth
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
 import javax.validation.Valid
 import javax.validation.constraints.Positive
 
@@ -18,34 +20,37 @@ class ArticleController(
     private val articleMapper: ArticleMapper
 ) {
     @PostMapping
-    fun postArticle(@Valid @RequestBody articlePostDto: ArticleDto.Input): ResponseEntity<ArticleDto.Response> {
+    fun postArticle(@Auth authInfo: AuthInfo,
+                    @Valid @RequestBody articlePostDto: ArticleDto.Input): ResponseEntity<ArticleDto.Response> {
         val article = articleService.createArticle(
-            articlePostDto.email, articlePostDto.password,
+            authInfo.email,
             articleMapper.articleInputDtoToArticle(articlePostDto)
         )
-        val response = articleMapper.articleToArticleResponse(article, articlePostDto.email)
+        val response = articleMapper.articleToArticleResponse(article, authInfo.email)
         return ResponseEntity.ok(response)
     }
 
     @PatchMapping("/{articleId}")
     fun updateArticle(
         @PathVariable @Positive articleId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody articlePatchDto: ArticleDto.Input
     ): ResponseEntity<ArticleDto.Response> {
         val article = articleService.updateArticle(
-            articleId, articlePatchDto.email, articlePatchDto.password,
+            articleId, authInfo.email,
             articleMapper.articleInputDtoToArticle(articlePatchDto)
         )
-        val response = articleMapper.articleToArticleResponse(article, articlePatchDto.email)
+        val response = articleMapper.articleToArticleResponse(article, authInfo.email)
         return ResponseEntity.ok(response)
     }
 
     @DeleteMapping("/{articleId}")
     fun deleteArticle(
         @PathVariable @Positive articleId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody articleDeleteDto: BaseUserDto
     ): ResponseEntity<Void> {
-        articleService.deleteArticle(articleId, articleDeleteDto.email, articleDeleteDto.password)
+        articleService.deleteArticle(articleId, authInfo.email)
         return ResponseEntity.ok().build()
     }
 }

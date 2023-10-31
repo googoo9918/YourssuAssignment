@@ -14,25 +14,26 @@ class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userService: UserService
 ) {
-    fun createArticle(email: String, password: String, article: Article): Article {
-        val validatedUser = userService.validateRegisterUser(email, password)
-        article.user = validatedUser
+    fun createArticle(email: String, article: Article): Article {
+//        val validatedUser = userService.validateRegisterUser(email, password)
+        article.user = userService.findUserByEmail(email)
         return articleRepository.save(article)
     }
 
-    fun updateArticle(articleId: Long, email: String, password: String, article: Article): Article {
+    fun updateArticle(articleId: Long, email: String, article: Article): Article {
         val preArticle = findVerifiedArticeByArticeId(articleId)
-        userService.validateUserAndAuthor(email, password, preArticle.user)
-
+//        userService.validateUserAndAuthor(email, password, preArticle.user)
+        userService.validateAuthor(userService.findUserByEmail(email), preArticle.user)
         article.title?.let { preArticle.updateTitle(it) }
         article.content?.let { preArticle.updateContent(it) }
 
         return articleRepository.save(preArticle)
     }
 
-    fun deleteArticle(articleId: Long, email: String, password: String) {
+    fun deleteArticle(articleId: Long, email: String) {
         val article = findVerifiedArticeByArticeId(articleId)
-        userService.validateUserAndAuthor(email, password, article.user)
+        //        userService.validateUserAndAuthor(email, password, preArticle.user)
+        userService.validateAuthor(userService.findUserByEmail(email), article.user)
         articleRepository.deleteById(articleId)
     }
 

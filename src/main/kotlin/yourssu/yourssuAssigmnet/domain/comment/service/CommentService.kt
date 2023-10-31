@@ -20,39 +20,39 @@ class CommentService(
     private val articleService: ArticleService
 ) {
     // 댓글 생성
-    fun createComment(articleId: Long, email: String, password: String, comment: Comment): Comment {
-        val validateUser = userService.validateRegisterUser(email, password)
+    fun createComment(articleId: Long, email: String, comment: Comment): Comment {
+//        val validateUser = userService.validateRegisterUser(email, password)
         val article = articleService.findVerifiedArticeByArticeId(articleId)
-        comment.user = validateUser
+        comment.user = userService.findUserByEmail(email)
         comment.article = article
         return commentRepository.save(comment)
     }
 
     // 댓글 수정
-    fun updateComment(articleId: Long, commentId: Long, email: String, password: String, comment: Comment): Comment {
+    fun updateComment(articleId: Long, commentId: Long, email: String, comment: Comment): Comment {
         val preComment = findVerifiedCommentByCommentId(commentId)
 
         // 게시글에 속하는 댓글인지 확인
         validateCommentBelongsToArticle(preComment, articleId)
 
         // 등록된 회원인지 확인, 작성자와 일치하는지 확인
-        val validatedUser = userService.validateUserAndAuthor(email, password, preComment.user)
-
+//        val validatedUser = userService.validateUserAndAuthor(email, password, preComment.user)
+        userService.validateAuthor(userService.findUserByEmail(email), preComment.user)
         comment.content?.let { preComment.updateContent(it) }
 
         return commentRepository.save(preComment)
     }
 
     // 댓글 삭제
-    fun deleteComment(articleId: Long, commentId: Long, email: String, password: String) {
+    fun deleteComment(articleId: Long, commentId: Long, email: String) {
         val comment = findVerifiedCommentByCommentId(commentId)
 
         // 게시글에 속하는 댓글인지 확인
         validateCommentBelongsToArticle(comment, articleId)
 
         // 등록된 회원인지 확인, 작성자와 일치하는지 확인
-        val validatedUser = userService.validateUserAndAuthor(email, password, comment.user)
-
+//        val validatedUser = userService.validateUserAndAuthor(email, password, comment.user)
+        userService.validateAuthor(userService.findUserByEmail(email), comment.user)
         commentRepository.deleteById(commentId)
     }
 

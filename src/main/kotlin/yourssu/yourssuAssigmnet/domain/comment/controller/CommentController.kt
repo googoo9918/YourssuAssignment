@@ -9,6 +9,8 @@ import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.Auth
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
 import javax.validation.Valid
 import javax.validation.constraints.Positive
 
@@ -23,13 +25,14 @@ class CommentController(
     @PostMapping("/{articleId}")
     fun postComment(
         @PathVariable @Positive articleId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody commentPostDto: CommentDto.Input
     ): ResponseEntity<CommentDto.Response> {
         val comment = commentService.createComment(
-            articleId, commentPostDto.email, commentPostDto.password,
+            articleId, authInfo.email,
             commentMapper.commentInputDtoToArticle(commentPostDto)
         )
-        val response = commentMapper.commentToCommentResponse(comment, commentPostDto.email)
+        val response = commentMapper.commentToCommentResponse(comment, authInfo.email)
         return ResponseEntity.ok(response)
     }
 
@@ -37,13 +40,14 @@ class CommentController(
     fun updateComment(
         @PathVariable @Positive articleId: Long,
         @PathVariable @Positive commentId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody commentPatchDto: CommentDto.Input
     ): ResponseEntity<CommentDto.Response> {
         val comment = commentService.updateComment(
-            articleId, commentId, commentPatchDto.email, commentPatchDto.password,
+            articleId, commentId, authInfo.email,
             commentMapper.commentInputDtoToArticle(commentPatchDto)
         )
-        val response = commentMapper.commentToCommentResponse(comment, commentPatchDto.email)
+        val response = commentMapper.commentToCommentResponse(comment, authInfo.email)
         return ResponseEntity.ok(response)
     }
 
@@ -51,9 +55,10 @@ class CommentController(
     fun deleteComment(
         @PathVariable @Positive articleId: Long,
         @PathVariable @Positive commentId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody commentDeleteDto: BaseUserDto
     ): ResponseEntity<Void> {
-        commentService.deleteComment(articleId, commentId, commentDeleteDto.email, commentDeleteDto.password)
+        commentService.deleteComment(articleId, commentId, commentDeleteDto.email)
         return ResponseEntity.ok().build()
     }
 }

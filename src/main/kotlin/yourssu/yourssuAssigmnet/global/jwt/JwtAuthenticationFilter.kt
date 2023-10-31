@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class JwtAuthenticationFilter(
-    private val jwtUtil: JwtUtil,
-    private val userDetailsService: UserDetailsService
+    private val jwtUtil: JwtUtil
+//    private val userDetailsService: UserDetailsService
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
