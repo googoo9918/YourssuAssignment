@@ -3,7 +3,7 @@ package yourssu.yourssuAssigmnet.domain.article.dto
 import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import javax.validation.constraints.NotBlank
 
-data class ArticleDto(
+class ArticleDto(
     val input: Input,
     val response: Response
 ) {

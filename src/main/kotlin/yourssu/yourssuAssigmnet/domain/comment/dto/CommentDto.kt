@@ -3,7 +3,7 @@ package yourssu.yourssuAssigmnet.domain.comment.dto
 import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import javax.validation.constraints.NotBlank
 
-data class CommentDto(
+class CommentDto(
    val content: String
 ) {
     data class Input(

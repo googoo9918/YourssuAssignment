@@ -30,4 +30,11 @@ class UserController(
         userService.deleteUser(userDeleteDto.email, userDeleteDto.password)
         return ResponseEntity.ok().build()
     }
+
+    @PostMapping("/login")
+    fun login(@Valid @RequestBody userLoginDto: BaseUserDto): ResponseEntity<UserDto.LoginResponse> {
+        val jwtTokenResponseDto = userService.login(userLoginDto)
+        return ResponseEntity.ok(jwtTokenResponseDto)
+    }
+
 }

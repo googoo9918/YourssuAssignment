@@ -8,18 +8,39 @@ import yourssu.yourssuAssigmnet.global.error.exception.EntityNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
+import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
+import yourssu.yourssuAssigmnet.global.jwt.JwtUtil
 
 @Service
 @Transactional
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val passwordEncoder: BCryptPasswordEncoder,
+    private val jwtUtil: JwtUtil
 ) {
 
     fun createUser(user: User): User {
         validateDuplicateUser(user)
-        user.encoderPassword(passwordEncoder.encode(user.password))
+        user.encodePassword(passwordEncoder.encode(user.password))
         return userRepository.save(user)
+    }
+
+    fun login(userLoginDto: BaseUserDto) : UserDto.LoginResponse{
+        val validateUser = validateRegisterUser(userLoginDto.email, userLoginDto.password)
+        val accessToken = jwtUtil.generateAccessToken(validateUser.email)
+        val refreshToken = jwtUtil.generateRefreshToken(validateUser.email)
+
+        validateUser.updateRefreshToken(refreshToken)
+        userRepository.save(validateUser)
+
+        return UserDto.LoginResponse(
+            validateUser.email,
+            validateUser.username,
+            validateUser.role,
+            accessToken,
+            refreshToken
+        )
     }
 
     private fun validateDuplicateUser(user: User) {
