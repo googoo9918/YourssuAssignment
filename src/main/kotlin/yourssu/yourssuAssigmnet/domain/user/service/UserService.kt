@@ -43,6 +43,11 @@ class UserService(
         )
     }
 
+    fun updateRefreshToken(user: User, newRefreshToken: String){
+        user?.updateRefreshToken(newRefreshToken)
+        userRepository.save(user)
+    }
+
     private fun validateDuplicateUser(user: User) {
         findUserByEmail(user.email)?.let {
             throw BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER)
