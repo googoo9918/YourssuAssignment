@@ -18,7 +18,7 @@ class UserController(
     private val userMapper: UserMapper
 ) {
 
-    @PostMapping("/new")
+    @PostMapping
     fun postUser(@Valid @RequestBody userPostDto: UserDto.Post): ResponseEntity<UserDto.Response> {
         val user = userService.createUser(userMapper.userPostDtoToUser(userPostDto))
         val response = userMapper.userToUserResponse(user)
@@ -29,12 +29,5 @@ class UserController(
     fun deleteUser(@Valid @RequestBody userDeleteDto: BaseUserDto): ResponseEntity<Void> {
         userService.deleteUser(userDeleteDto.email, userDeleteDto.password)
         return ResponseEntity.ok().build()
-    }
-
-    // 로그인
-    @PostMapping("/login")
-    fun loginUser(@Valid @RequestBody userLoginDto: BaseUserDto): ResponseEntity<UserDto.LoginResponse> {
-        val jwtTokenResponseDto = userService.login(userMapper.userLoginDtoToUser(userLoginDto))
-        return ResponseEntity.ok(jwtTokenResponseDto)
     }
 }
