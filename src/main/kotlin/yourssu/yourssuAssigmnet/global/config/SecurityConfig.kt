@@ -32,8 +32,15 @@ class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/api/members").permitAll()
             .antMatchers(HttpMethod.DELETE, "/api/members").authenticated()
             .antMatchers(HttpMethod.POST, "/api/members/login").permitAll()
+            .antMatchers(
+                "/swagger-ui/**",       // 스웨거 UI에 대한 접근을 허용
+                "/swagger-resources/**",  // 스웨거 리소스에 대한 접근을 허용
+                "/v3/api-docs",          // 스웨거 API docs에 대한 접근을 허용
+                "/webjars/**"           // 스웨거 UI를 지원하는 webjars에 대한 접근을 허용
+            ).permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic()
+            .formLogin().disable()
+            .httpBasic().disable()
     }
 }
