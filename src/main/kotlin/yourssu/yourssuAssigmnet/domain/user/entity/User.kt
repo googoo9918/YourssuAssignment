@@ -1,8 +1,6 @@
 package yourssu.yourssuAssigmnet.domain.user.entity
 
 import yourssu.yourssuAssigmnet.domain.common.BaseTimeEntity
-import yourssu.yourssuAssigmnet.domain.user.constant.Role
-import yourssu.yourssuAssigmnet.global.jwt.dto.JwtTokenDto
 import javax.persistence.*
 
 @Entity
@@ -19,31 +17,12 @@ data class User(
     var password: String,
 
     @Column(nullable = false)
-    var username: String,
-
-    @Column(length = 250)
-    var refreshToken: String? = null,
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    var role: Role
+    var username: String
 ) : BaseTimeEntity() {
 
-    fun encodePassword(password: String?) {
+    fun encoderPassword(password: String?) {
         password?.let {
             this.password = it
-        }
-    }
-
-    fun updateRole(role: Role?) {
-        role?.let {
-            this.role = it
-        }
-    }
-
-    fun updateRefreshToken(jwtTokenDto: JwtTokenDto?){
-        jwtTokenDto?.let{
-            this.refreshToken = it.refreshToken
         }
     }
 }
