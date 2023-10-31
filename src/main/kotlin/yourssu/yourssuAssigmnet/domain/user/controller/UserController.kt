@@ -8,6 +8,8 @@ import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.Auth
+import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
 import javax.validation.Valid
 
 @RestController
@@ -26,8 +28,11 @@ class UserController(
     }
 
     @DeleteMapping
-    fun deleteUser(@Valid @RequestBody userDeleteDto: BaseUserDto): ResponseEntity<Void> {
-        userService.deleteUser(userDeleteDto.email, userDeleteDto.password)
+    fun deleteUser(
+//        @Valid @RequestBody userDeleteDto: BaseUserDto
+        @Auth authInfo: AuthInfo
+    ): ResponseEntity<Void> {
+        userService.deleteUser(authInfo.email)
         return ResponseEntity.ok().build()
     }
 

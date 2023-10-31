@@ -9,7 +9,7 @@ class CommentDto(
     data class Input(
         @field:NotBlank(message = "내용을 입력해주세요")
         val content: String
-    ) : BaseUserDto()
+    )
 
     data class Response(
         val commentId: Long,

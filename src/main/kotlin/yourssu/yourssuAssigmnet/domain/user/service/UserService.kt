@@ -57,7 +57,7 @@ class UserService(
         return user
     }
 
-    private fun validateAuthor(loginUser: User, authorUser: User?) {
+    fun validateAuthor(loginUser: User?, authorUser: User?) {
         if (loginUser != authorUser) {
             throw BusinessException(ErrorCode.AUTHOR_MISMATCH)
         }
@@ -69,13 +69,11 @@ class UserService(
         return validatedUser
     }
 
-    private fun findUserByEmail(email: String): User? = userRepository.findByEmail(email)
+    fun findUserByEmail(email: String): User? = userRepository.findByEmail(email)
 
-    private fun findVerifiedUserByUserId(userId: Long): User =
-        userRepository.findById(userId).orElseThrow { EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS) }
-
-    fun deleteUser(email: String, password: String) {
-        val user = validateRegisterUser(email, password)
-        userRepository.deleteById(user.userId!!)
+    fun deleteUser(email: String) {
+//        val user = validateRegisterUser(email, password)
+        val user = findUserByEmail(email)
+        userRepository.deleteById(user?.userId!!)
     }
 }

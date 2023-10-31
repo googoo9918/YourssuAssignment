@@ -13,7 +13,7 @@ class ArticleDto(
 
         @field:NotBlank(message = "내용을 입력해주세요")
         val content: String
-    ) : BaseUserDto()
+    )
 
     data class Response(
         val articleId: Long,
