@@ -44,13 +44,10 @@ jobs:
            cd ./resources
            # 필요한 yml 파일들을 만들어줍니다.
            touch ./application.yml
-           touch ./application-aws.yml
            # 등록해둔 Github Secrets의 내용을 이용해서 yml 파일의 내용을 써줍니다.
            echo "$APPLICATION" > ./application.yml
-           echo "$APPLICATION_AWS" > ./application-aws.yml
         env:
           APPLICATION: ${{ secrets.APPLICATION }}
-          APPLICATION_AWS: ${{ secrets.APPLICATION_AWS }}
         shell: bash
 
       - name: Gradle 권한 부여
