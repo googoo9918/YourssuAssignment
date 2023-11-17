@@ -90,7 +90,7 @@ jobs:
         run: aws deploy create-deployment --application-name yourssu-app
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name yourssu-app
-          --s3-location bucket=backend-rex-bucket,bundleType=zip,key=spring-build.zip
+          --s3-location bucket=yourssu-incubating-bucket,bundleType=zip,key=spring-build.zip
     
         # 이 구문을 추가해야 빌드 성공 실패와 상관없이 동작합니다.
         if: always()
