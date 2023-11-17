@@ -38,8 +38,8 @@ class SwaggerConfig{
     //현재 @AuthInfo는 직접 입력하는게 아니라 토큰에서 가져오는 값이기에 무시처리
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
-        .title("API 문서")
-        .description("API에 대해서 설명해주는 문서입니다.")
+        .title("유어슈 인큐베이팅 API 문서")
+        .description("유어슈 인큐베이팅 2주차까지의 API 문서입니다.")
         .version("1.0")
         .build()
 
