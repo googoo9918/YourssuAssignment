@@ -40,7 +40,6 @@ jobs:
           # src/main 으로 경로를 이동합니다.
            cd ./src/main
            # src/main 경로에 resources 폴더를 만들어줍니다.
-           mkdir resources
            cd ./resources
            # 필요한 yml 파일들을 만들어줍니다.
            touch ./application.yml
@@ -83,14 +82,14 @@ jobs:
         run: |
           aws s3 cp \
           --region ap-northeast-2 \
-          ./spring-build.zip s3://backend-rex-bucket
+          ./spring-build.zip s3://yourssu-incubating-bucket
       
       # CodeDelploy에 배포를 요청합니다.
       - name: Code Deploy 배포 요청
-        run: aws deploy create-deployment --application-name backend-deploy-group
+        run: aws deploy create-deployment --application-name yourssu-app
           --deployment-config-name CodeDeployDefault.OneAtATime
-          --deployment-group-name backend-deploy-group
-          --s3-location bucket=backend-rex-bucket,bundleType=zip,key=spring-build.zip
+          --deployment-group-name yourssu-app
+          --s3-location bucket=yourssu-incubating-bucket,bundleType=zip,key=spring-build.zip
     
         # 이 구문을 추가해야 빌드 성공 실패와 상관없이 동작합니다.
         if: always()
