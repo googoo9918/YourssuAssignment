@@ -1,18 +1,15 @@
-package yourssu.yourssuAssigmnet.global.config;
+package yourssu.yourssuAssigmnet.global.config
 
-import org.springframework.beans.factory.annotation.Autowired
-import kotlin.jvm.Throws;
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import yourssu.yourssuAssigmnet.global.jwt.JwtAuthenticationFilter
-import yourssu.yourssuAssigmnet.global.jwt.JwtUtil
+import kotlin.jvm.Throws
 
 @Configuration
 @EnableWebSecurity
@@ -33,10 +30,10 @@ class SecurityConfig(
             .antMatchers(HttpMethod.DELETE, "/api/members").authenticated()
             .antMatchers(HttpMethod.POST, "/api/members/login").permitAll()
             .antMatchers(
-                "/swagger-ui/**",       // 스웨거 UI에 대한 접근을 허용
-                "/swagger-resources/**",  // 스웨거 리소스에 대한 접근을 허용
-                "/v3/api-docs",          // 스웨거 API docs에 대한 접근을 허용
-                "/webjars/**"           // 스웨거 UI를 지원하는 webjars에 대한 접근을 허용
+                "/swagger-ui/**", // 스웨거 UI에 대한 접근을 허용
+                "/swagger-resources/**", // 스웨거 리소스에 대한 접근을 허용
+                "/v3/api-docs", // 스웨거 API docs에 대한 접근을 허용
+                "/webjars/**" // 스웨거 UI를 지원하는 webjars에 대한 접근을 허용
             ).permitAll()
             .anyRequest().authenticated()
             .and()

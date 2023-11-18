@@ -18,7 +18,7 @@ import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
  * 스웨거 설정 클래스
  */
 @Configuration
-class SwaggerConfig{
+class SwaggerConfig {
 
     /**
      * 스웨거 설정에 핵심이 되는 Bean
@@ -35,7 +35,7 @@ class SwaggerConfig{
         .securitySchemes(listOf(apiKey()))
         // security 설정으로 swagger에서 자물쇠 버튼을 클릭, Authrization 헤더를 넣어줄 수 있게됨
         .ignoredParameterTypes(AuthInfo::class.java)
-    //현재 @AuthInfo는 직접 입력하는게 아니라 토큰에서 가져오는 값이기에 무시처리
+    // 현재 @AuthInfo는 직접 입력하는게 아니라 토큰에서 가져오는 값이기에 무시처리
 
     private fun apiInfo(): ApiInfo = ApiInfoBuilder()
         .title("유어슈 인큐베이팅 API 문서")

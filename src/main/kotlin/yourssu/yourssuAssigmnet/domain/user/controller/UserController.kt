@@ -1,16 +1,25 @@
 package yourssu.yourssuAssigmnet.domain.user.controller
 
-import io.swagger.annotations.*
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
+import io.swagger.annotations.ApiResponse
+import io.swagger.annotations.ApiResponses
 import org.springframework.format.annotation.DateTimeFormat
-import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
-import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
-import yourssu.yourssuAssigmnet.domain.user.entity.User
-import yourssu.yourssuAssigmnet.domain.user.mapper.UserMapper
-import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
+import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
+import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
+import yourssu.yourssuAssigmnet.domain.user.mapper.UserMapper
+import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import yourssu.yourssuAssigmnet.global.resolver.authinfo.Auth
 import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
 import java.time.LocalDate
@@ -34,7 +43,12 @@ class UserController(
             ApiResponse(code = 405, message = "Request method not supported")
         ]
     )
-    fun postUser(@Valid @RequestBody @ApiParam(value = "사용자 등록 정보") userPostDto: UserDto.Post): ResponseEntity<UserDto.Response> {
+    fun postUser(
+        @Valid
+        @RequestBody
+        @ApiParam(value = "사용자 등록 정보")
+        userPostDto: UserDto.Post
+    ): ResponseEntity<UserDto.Response> {
         val user = userService.createUser(userMapper.userPostDtoToUser(userPostDto))
         val response = userMapper.userToUserResponse(user)
         return ResponseEntity.ok(response)
@@ -65,7 +79,12 @@ class UserController(
             ApiResponse(code = 405, message = "Request method not supported")
         ]
     )
-    fun login(@Valid @RequestBody  @ApiParam(value = "로그인 정보") userLoginDto: BaseUserDto): ResponseEntity<UserDto.LoginResponse> {
+    fun login(
+        @Valid
+        @RequestBody
+        @ApiParam(value = "로그인 정보")
+        userLoginDto: BaseUserDto
+    ): ResponseEntity<UserDto.LoginResponse> {
         val jwtTokenResponseDto = userService.login(userLoginDto)
         return ResponseEntity.ok(jwtTokenResponseDto)
     }
@@ -76,13 +95,26 @@ class UserController(
 //        @ModelAttribute criteria: UserDto.SearchCriteria
         @RequestParam(required = false) username: String?,
         @RequestParam(required = false) email: String?,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") createdAtStart: LocalDate?,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") createdAtEnd: LocalDate?,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") updatedAtStart: LocalDate?,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") updatedAtEnd: LocalDate?
-    ): ResponseEntity<List<UserDto.ShowResponseDto>>{
+        @RequestParam(required = false)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        createdAtStart: LocalDate?,
+        @RequestParam(required = false)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        createdAtEnd: LocalDate?,
+        @RequestParam(required = false)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        updatedAtStart: LocalDate?,
+        @RequestParam(required = false)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        updatedAtEnd: LocalDate?
+    ): ResponseEntity<List<UserDto.ShowResponseDto>> {
         val users = userService.findUsersWithFilters(
-            username, email, createdAtStart, createdAtEnd, updatedAtStart, updatedAtEnd
+            username,
+            email,
+            createdAtStart,
+            createdAtEnd,
+            updatedAtStart,
+            updatedAtEnd
 //            criteria.username, criteria.email,
 //            criteria.createdAtStart, criteria.createdAtEnd,
 //            criteria.updatedAtStart, criteria.updatedAtEnd

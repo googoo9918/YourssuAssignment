@@ -1,6 +1,6 @@
 package yourssu.yourssuAssigmnet.global.error
 
-import yourssu.yourssuAssigmnet.global.error.exception.BusinessException
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
@@ -8,8 +8,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import yourssu.yourssuAssigmnet.global.error.exception.BusinessException
 import javax.servlet.http.HttpServletRequest
-import org.slf4j.LoggerFactory
 
 @RestControllerAdvice
 class GlobalExceptionHandler(private val httpServletRequest: HttpServletRequest) {

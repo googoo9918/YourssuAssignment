@@ -1,12 +1,12 @@
 package yourssu.yourssuAssigmnet.domain.article.service
 
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import yourssu.yourssuAssigmnet.domain.article.entity.Article
 import yourssu.yourssuAssigmnet.domain.article.repository.ArticleRepository
 import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import yourssu.yourssuAssigmnet.global.error.ErrorCode
 import yourssu.yourssuAssigmnet.global.error.exception.EntityNotFoundException
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional

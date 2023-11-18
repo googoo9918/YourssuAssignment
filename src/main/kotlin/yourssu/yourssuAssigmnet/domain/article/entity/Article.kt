@@ -1,11 +1,17 @@
 package yourssu.yourssuAssigmnet.domain.article.entity
 
-import yourssu.yourssuAssigmnet.domain.user.entity.User
-import yourssu.yourssuAssigmnet.domain.common.BaseTimeEntity
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
-import javax.persistence.*
+import yourssu.yourssuAssigmnet.domain.common.BaseTimeEntity
+import yourssu.yourssuAssigmnet.domain.user.entity.User
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 data class Article(

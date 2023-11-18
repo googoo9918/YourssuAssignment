@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 class YourssuAssigmnetApplication
 
 fun main(args: Array<String>) {
-	runApplication<YourssuAssigmnetApplication>(*args)
+    runApplication<YourssuAssigmnetApplication>(*args)
 }
-

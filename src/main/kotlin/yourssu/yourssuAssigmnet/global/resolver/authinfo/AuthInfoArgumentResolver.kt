@@ -13,14 +13,14 @@ class AuthInfoArgumentResolver(
     private val jwtUtil: JwtUtil
 ) : HandlerMethodArgumentResolver {
 
-    //Resolver가 특정 파라미터를 지원하는지 여부를 반환
+    // Resolver가 특정 파라미터를 지원하는지 여부를 반환
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         // 파라미터 타입이 AuthInfo와 동일하고, @Auth 애노테이션이 해당 파라미터에 존재하는 경우 true를 반환
         return parameter.parameterType.isAssignableFrom(AuthInfo::class.java) &&
-                parameter.hasParameterAnnotation(Auth::class.java)
+            parameter.hasParameterAnnotation(Auth::class.java)
     }
 
-    //실제로 파라미터 값을 반환하는 로직을 포함
+    // 실제로 파라미터 값을 반환하는 로직을 포함
     override fun resolveArgument(
         parameter: MethodParameter,
         modelAndViewContainer: ModelAndViewContainer?,

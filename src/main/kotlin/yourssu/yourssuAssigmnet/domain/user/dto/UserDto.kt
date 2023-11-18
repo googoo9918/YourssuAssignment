@@ -2,8 +2,6 @@ package yourssu.yourssuAssigmnet.domain.user.dto
 
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import lombok.AllArgsConstructor
-import lombok.Getter
 import org.springframework.format.annotation.DateTimeFormat
 import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import yourssu.yourssuAssigmnet.domain.user.constant.Role
