@@ -1,6 +1,7 @@
 package yourssu.yourssuAssigmnet.global.jwt
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
@@ -20,9 +21,11 @@ class JwtAuthenticationFilter(
 
         if (token != null && jwtUtil.validateToken(token)) {
             val email = jwtUtil.getEmailFromToken(token)
+            val role = jwtUtil.getRoleFromToken(token)
 //            val userDetails = userDetailsService.loadUserByUsername(email)
 //            val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
-            val authentication = UsernamePasswordAuthenticationToken(email, null, emptyList())
+            val authorities = listOf(SimpleGrantedAuthority("ROLE_$role"))
+            val authentication = UsernamePasswordAuthenticationToken(email, null, authorities)
             SecurityContextHolder.getContext().authentication = authentication
         }
 

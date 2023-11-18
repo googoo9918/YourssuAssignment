@@ -5,6 +5,7 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
+import yourssu.yourssuAssigmnet.domain.user.constant.Role
 import yourssu.yourssuAssigmnet.global.error.ErrorCode
 import yourssu.yourssuAssigmnet.global.error.exception.AuthenticationException
 import java.nio.charset.StandardCharsets
@@ -22,11 +23,12 @@ class JwtUtil {
     @Value("\${token.refresh-token-expiration-time}")
     private lateinit var refreshTokenExpirationTime: String
 
-    fun generateAccessToken(email: String): String{
+    fun generateAccessToken(email: String, role: Role): String{
         val expirationTime = Date(System.currentTimeMillis() + accessTokenExpirationTime.toLong())
 
         return Jwts.builder()
             .setSubject(email)
+            .claim("role", role.name )
             .setIssuedAt(Date())
             .setExpiration(expirationTime)
             .signWith(SignatureAlgorithm.HS512, tokenSecret.toByteArray(Charsets.UTF_8))
@@ -55,5 +57,12 @@ class JwtUtil {
 
     fun getEmailFromToken(token: String): String {
         return Jwts.parser().setSigningKey(tokenSecret.toByteArray()).parseClaimsJws(token).body.subject
+    }
+
+    fun getRoleFromToken(token: String): String {
+        return Jwts.parser()
+            .setSigningKey(tokenSecret.toByteArray())
+            .parseClaimsJws(token)
+            .body["role"].toString()
     }
 }
