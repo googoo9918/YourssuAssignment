@@ -1,8 +1,8 @@
 package yourssu.yourssuAssigmnet.domain.user.mapper
 
-import yourssu.yourssuAssigmnet.domain.user.entity.User
 import org.mapstruct.Mapper
 import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
+import yourssu.yourssuAssigmnet.domain.user.entity.User
 
 @Mapper(componentModel = "spring")
 interface UserMapper {

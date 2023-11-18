@@ -2,14 +2,13 @@ package yourssu.yourssuAssigmnet.global.error
 
 import org.springframework.http.HttpStatus
 import org.springframework.validation.BindingResult
-import org.springframework.validation.FieldError
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 data class ErrorResponse(
     val time: String,
-    val status: HttpStatus,  // ErrorCode의 HttpStatus를 사용
-    val message: String,     // ErrorCode의 message를 사용
+    val status: HttpStatus, // ErrorCode의 HttpStatus를 사용
+    val message: String, // ErrorCode의 message를 사용
     val requestURI: String
 ) {
     companion object {

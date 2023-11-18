@@ -7,4 +7,3 @@ package yourssu.yourssuAssigmnet.global.resolver.authinfo
 // 문서포함여부
 @MustBeDocumented
 annotation class Auth
-

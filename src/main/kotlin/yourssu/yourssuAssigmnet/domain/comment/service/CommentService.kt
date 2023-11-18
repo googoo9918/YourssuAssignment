@@ -1,16 +1,14 @@
 package yourssu.yourssuAssigmnet.domain.comment.service
 
-import yourssu.yourssuAssigmnet.domain.article.entity.Article
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import yourssu.yourssuAssigmnet.domain.article.service.ArticleService
 import yourssu.yourssuAssigmnet.domain.comment.entity.Comment
 import yourssu.yourssuAssigmnet.domain.comment.repository.CommentRepository
-import yourssu.yourssuAssigmnet.domain.user.entity.User
 import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import yourssu.yourssuAssigmnet.global.error.ErrorCode
 import yourssu.yourssuAssigmnet.global.error.exception.BusinessException
 import yourssu.yourssuAssigmnet.global.error.exception.EntityNotFoundException
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional

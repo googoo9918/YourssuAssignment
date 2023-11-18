@@ -1,6 +1,5 @@
 package yourssu.yourssuAssigmnet.domain.article.dto
 
-import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import javax.validation.constraints.NotBlank
 
 class ArticleDto(

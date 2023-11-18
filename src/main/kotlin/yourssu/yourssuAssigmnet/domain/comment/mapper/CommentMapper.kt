@@ -1,8 +1,8 @@
 package yourssu.yourssuAssigmnet.domain.comment.mapper
 
+import org.mapstruct.Mapper
 import yourssu.yourssuAssigmnet.domain.comment.dto.CommentDto
 import yourssu.yourssuAssigmnet.domain.comment.entity.Comment
-import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")
 interface CommentMapper {
