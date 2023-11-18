@@ -1,16 +1,19 @@
 package yourssu.yourssuAssigmnet.domain.user.controller
 
 import io.swagger.annotations.*
+import org.springframework.format.annotation.DateTimeFormat
 import yourssu.yourssuAssigmnet.domain.common.dto.BaseUserDto
 import yourssu.yourssuAssigmnet.domain.user.dto.UserDto
 import yourssu.yourssuAssigmnet.domain.user.entity.User
 import yourssu.yourssuAssigmnet.domain.user.mapper.UserMapper
 import yourssu.yourssuAssigmnet.domain.user.service.UserService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import yourssu.yourssuAssigmnet.global.resolver.authinfo.Auth
 import yourssu.yourssuAssigmnet.global.resolver.authinfo.AuthInfo
+import java.time.LocalDate
 import javax.validation.Valid
 
 @RestController
@@ -67,4 +70,33 @@ class UserController(
         return ResponseEntity.ok(jwtTokenResponseDto)
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/show")
+    fun showUSers(
+//        @ModelAttribute criteria: UserDto.SearchCriteria
+        @RequestParam(required = false) username: String?,
+        @RequestParam(required = false) email: String?,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") createdAtStart: LocalDate?,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") createdAtEnd: LocalDate?,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") updatedAtStart: LocalDate?,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") updatedAtEnd: LocalDate?
+    ): ResponseEntity<List<UserDto.ShowResponseDto>>{
+        val users = userService.findUsersWithFilters(
+            username, email, createdAtStart, createdAtEnd, updatedAtStart, updatedAtEnd
+//            criteria.username, criteria.email,
+//            criteria.createdAtStart, criteria.createdAtEnd,
+//            criteria.updatedAtStart, criteria.updatedAtEnd
+        )
+        val response = users.map { user ->
+            UserDto.ShowResponseDto(
+                id = user.userId,
+                email = user.email,
+                username = user.username,
+                role = user.role.name,
+                createdAt = user.createdAt,
+                updatedAt = user.updatedAt
+            )
+        }
+        return ResponseEntity.ok(response)
+    }
 }
