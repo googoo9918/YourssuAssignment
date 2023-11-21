@@ -50,4 +50,11 @@ class GlobalExceptionHandler(private val httpServletRequest: HttpServletRequest)
         val errorResponse = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, e.message ?: "", httpServletRequest.requestURI)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse)
     }
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(e: AccessDeniedException): ResponseEntity<ErrorResponse> {
+        log.error("AccessDeniedException", e)
+        val errorResponse = ErrorResponse.of(HttpStatus.FORBIDDEN, "Access is denied", httpServletRequest.requestURI)
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse)
+    }
 }
