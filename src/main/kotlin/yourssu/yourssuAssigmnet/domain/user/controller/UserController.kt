@@ -90,8 +90,17 @@ class UserController(
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation(value = "사용자 목록 조회")
+    @ApiResponses(
+        value = [
+            ApiResponse(code = 200, message = "성공"),
+            ApiResponse(code = 400, message = "잘못된 인자 전달"),
+            ApiResponse(code = 403, message = "접근이 거부되었습니다"),
+            ApiResponse(code = 405, message = "Request method not supported")
+        ]
+    )
     @GetMapping("/show")
-    fun showUSers(
+    fun showUsers(
 //        @ModelAttribute criteria: UserDto.SearchCriteria
         @RequestParam(required = false) username: String?,
         @RequestParam(required = false) email: String?,
